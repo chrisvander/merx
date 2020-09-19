@@ -11,7 +11,6 @@ import { Dashboard } from '../imports/ui/Dashboard';
 import { Logout } from '../imports/ui/Logout';
 import { Error } from '../imports/ui/Error';
 import { UEFANavbar } from '../imports/ui/Navbar';
-import { Graph } from '../imports/ui/Graph';
 import { Course } from '../imports/ui/Course';
 import { Profile } from '../imports/ui/Profile';
 
@@ -28,7 +27,6 @@ const UntrackedRoutes = () => (
             <Route path="/course/:courseID" render = {props => <Course {...props} />} />
             <Route path="/logout" component={withRouter(Logout)} />
             <Route path="/profile" component={Profile} />
-            <Route path="/graph" component={Graph} />
             <Route component={Error} />
         </Switch>
     </Router>

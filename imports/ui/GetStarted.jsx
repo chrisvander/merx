@@ -5,35 +5,37 @@ import { Accounts } from 'meteor/accounts-base';
 
 const reasons = [
     [
+        1,
         "Literacy", 
         "Get an educational foundation in finance, investing, and understanding how to make your money work for you.",
         "Choose this option if you're stable financially and just looking to learn more about how to optimize your existing investments or want to know how to utilize some level of savings."
     ],
     [
+        2,
         "Stability", 
         "Create financial stability so in times of economic downturn you have a backup plan.",
         "Choose this option if you lack savings or don't know how to afford bills and your living expenses if you didn't have a job."
     ],
     [
+        3,
         "Retirement", 
         "Ensure you are targeting to retire with enough money to last you for the rest of your life.",
         "Choose this option if you have enough savings for if the market went into a downturn or you lost a job, but want to set yourself up well to retire."
     ],
     [
+        4,
         "Wealth", 
         "Grow your wealth to give you more options to do what you want with your life.",
         "Choose this option if you have disposable savings that you want to put to work."
     ]
 ]
 
-const CardDisplay = ({ title, body, reason, onClick }) => {
-    const [selected, setSelected] = useState(false);
-
+const CardDisplay = ({ title, body, reason, onClick, selected, setSelected }) => {
     return (
         <Card 
             className={`mt-4 selectable-card ${selected && 'border-green'}`}
             onClick={() => {
-                setSelected(true);
+                setSelected();
                 onClick();
             }}>
             <Card.Body>
@@ -52,7 +54,8 @@ class GetStarted extends React.Component {
         this.email = React.createRef();
         this.password = React.createRef();
         this.state = {
-            dialog: false
+            dialog: false,
+            selected: null
         }
     }
 
@@ -65,6 +68,7 @@ class GetStarted extends React.Component {
         console.log("FORM SUBMITTED", email, password);
 
         Meteor.call("createUser", { email, password }, (err, userId) => {
+            Accounts.update({ _id: userID }, { selected: this.state.key });
             if (err) {
                 console.log(err);
             } else {
@@ -79,13 +83,15 @@ class GetStarted extends React.Component {
                 <Container style={{ display: 'flex', height: '80vh', alignItems: 'center'}}>
                     <div className="w-100">
                         <h1 className="mt-6">What are your financial goals?</h1>
-                        {reasons.map(([title, body, reason]) => 
+                        {reasons.map(([key, title, body, reason]) => 
                             <CardDisplay 
                                 title={title} 
                                 body={body} 
                                 reason={reason} 
-                                onClick={() => this.setState({ dialog: true })}/>
+                                selected={this.state.selected === key}
+                                setSelected={() => this.setState({ selected: key })}/>
                         )}
+                        { this.state.selected != null && <Button className="mt-5" onClick={() => this.setState({ dialog: true })}>Continue</Button>}
                     </div>
                 </Container>
                 {this.state.dialog && <React.Fragment>

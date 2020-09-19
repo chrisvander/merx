@@ -1,21 +1,24 @@
 import { Meteor } from 'meteor/meteor';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Typeahead, TypeaheadInputSingle } from 'react-bootstrap-typeahead';
-
+import Plot from 'react-plotly.js';
 
 
 const colors = ["red", "purple", "green", "gray", "orange"]
 const tickerWhitelist = ["HD","DIS","MSFT","BA","MMM","PFE","NKE","JNJ","MCD","INTC","XOM","GS","JPM","AXP","V","IBM","UNH","PG","GE","KO","CSCO","CVX","CAT","MRK","WMT","VZ","UTX","TRV","AAPL"]
 
-export const Graph  = (props) => {
+export const StockGraph  = (props) => {
     const [tickers, setTickers] = useState([]);
     const [counter, setCounter] = useState(0);
     const [tickerInput, setTickerInput] = useState("");
     const [isLoading, setLoading] = useState(false);
 
+    const typeahead = useRef(null);
+
     const addTicker = tickersSelected => {
         setLoading(true);
+        typeahead.current.clear()
         tickersSelected.forEach(ticker => {
             if (tickerWhitelist.includes(ticker)) {
                 fetch("http://localhost:5000/stock-history?stock=" + ticker)
@@ -55,14 +58,6 @@ export const Graph  = (props) => {
         )
     }
 
-    const getTickerPrices = ticker => {
-        fetch("http://localhost:5000/stock-history?stock=" + ticker)
-            .then(res => res.json())
-            .then(res => setTickers(res));
-    }
-
-
-
     return (
         <div>
             <Typeahead
@@ -75,6 +70,7 @@ export const Graph  = (props) => {
                 autocomplete="off" 
                 autocorrect="off" 
                 autocapitalize="off"
+                ref={typeahead}
             />
             {tickers.map(createButton)}
             <Button disabled={isLoading} onClick={isLoading ? null : () => addTicker(tickerInput)}>

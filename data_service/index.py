@@ -43,22 +43,22 @@ app = Flask(__name__)
 CORS(app)
 quandl.ApiConfig.api_key = 'uyxvXKZ3zKytArHDVdwR'
 
-@app.route('/stock-history', methods=['GET'])
+@app.route('/stock-history/', methods=['GET'])
 def get_history():
   return request_stock(request.args)
 
-@app.route('/stock-tickers', methods=['GET'])
+@app.route('/stock-tickers/', methods=['GET'])
 def get_tickers():
   return jsonify(['HD','DIS','MSFT','BA','MMM','PFE','NKE','JNJ','MCD','INTC','XOM','GS','JPM','AXP','V','IBM','UNH','PG','GE','KO','CSCO','CVX','CAT','MRK','WMT','VZ','UTX','TRV','AAPL'])
 
-@app.route('/bonds', methods=['GET'])
+@app.route('/bonds/', methods=['GET'])
 def get_bonds():
   df = quandl.get_table('CHORD7/BD', date='2013-05-01', qopts={'columns':['date', 'ask_price']})
   print(df.index)
   
   return df.to_json()
 
-@app.route('/returns', methods=['GET'])
+@app.route('/returns/', methods=['GET'])
 def get_return():
   # input = request.args
   start_price = quandl.get("EOD/HD", start_date=input['2017-12-26'], end_date=input['2017-12-26'])
