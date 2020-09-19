@@ -25,21 +25,18 @@ def request_stock(input):
   else:
     return 'error: must provide stock ticker'
 
-  # if 'start' in input:
-  #   start = input['start']
-  # else:
-  #   start = None
+  if 'start' in input:
+    start = input['start']
+  else:
+    start = None
 
-  # if 'end' in input:
-  #   end = input['end']
-  # else:
-  #   end = None
+  if 'end' in input:
+    end = input['end']
+  else:
+    end = None
 
-  return quandl.get("EOD/" + stock).to_json()
+  return quandl.get(["EOD/" + stock, "Close"], start_date="2017-12-26", end_date="2017-12-28").to_json()
 ''', start_date=start, end_date=end'''
-
-# def parse_date(date):
-#   return {'year': int(str(date)[:4]), 'month': int(str(date)[5:7]), 'day': int(str(date)[8:10])}
 
 if __name__ == "__main__":
   app.run(debug=False, port=5000)

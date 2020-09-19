@@ -17,7 +17,8 @@ export const LoginPage = (props) => {
       else props.history.push("/dashboard");
     });
   }
-  // if (redirect) return <Redirect to='/dashboard' />
+
+  if (redirect) return <Redirect to='/dashboard' />
   return (
     <Modal.Dialog>
       <Modal.Body>

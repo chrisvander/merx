@@ -16,7 +16,10 @@ export const UEFANavbar = () => {
                     ) : (
                         <React.Fragment>
                             <Button href="/login" variant="light" className="mr-3">Log In</Button>
-                            <Button href="/get-started">Get Started</Button>
+                            <Button href="/get-started" style={{ 
+                                borderColor: '#F64C72',
+                                backgroundColor: '#F64C72' 
+                            }}>Get Started</Button>
                         </React.Fragment>
                     )}
                 </div>

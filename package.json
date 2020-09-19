@@ -2,7 +2,7 @@
   "name": "ufea",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "concurrently \"meteor run\" \"source ufea/bin/activate && python data_service/index.py\"",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
@@ -12,6 +12,7 @@
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.2",
     "bulma": "^0.9.0",
+    "concurrently": "^5.3.0",
     "history": "^5.0.0",
     "meteor-node-stubs": "^1.0.1",
     "node-sass": "^4.14.1",
