@@ -1,24 +1,33 @@
 import { Meteor } from 'meteor/meteor';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Typeahead, TypeaheadInputSingle } from 'react-bootstrap-typeahead';
+import Plot from 'react-plotly.js';
 
 const colors = ["red", "purple", "green", "gray", "orange"]
-const tickerWhitelist = ["AAPL", "GOOG", "MSFT"]
+const tickerWhitelist = ["HD","DIS","MSFT","BA","MMM","PFE","NKE","JNJ","MCD","INTC","XOM","GS","JPM","AXP","V","IBM","UNH","PG","GE","KO","CSCO","CVX","CAT","MRK","WMT","VZ","UTX","TRV","AAPL"]
 
 export const Graph  = (props) => {
     const [tickers, setTickers] = useState([]);
     const [counter, setCounter] = useState(0);
     const [tickerInput, setTickerInput] = useState("");
+    const [isLoading, setLoading] = useState(false);
 
     const addTicker = tickersSelected => {
+        setLoading(true);
         tickersSelected.forEach(ticker => {
             if (tickerWhitelist.includes(ticker)) {
-                setTickers([...tickers, {
-                    key: counter,
-                    color: colors[counter % colors.length],
-                    ticker
-                }]);
+                fetch("http://localhost:5000/stock-history?stock=" + ticker)
+                    .then(res => res.json())
+                    .then(res => {
+                        setTickers([...tickers, {
+                            key: counter,
+                            color: colors[counter % colors.length],
+                            ticker,
+                            prices: res
+                        }]);
+                        setLoading(false);
+                    });
     
                 setCounter(counter + 1);
             }
@@ -45,6 +54,14 @@ export const Graph  = (props) => {
         )
     }
 
+    const getTickerPrices = ticker => {
+        fetch("http://localhost:5000/stock-history?stock=" + ticker)
+            .then(res => res.json())
+            .then(res => setTickers(res));
+    }
+
+
+
     return (
         <div>
             <Typeahead
@@ -54,11 +71,39 @@ export const Graph  = (props) => {
                 id="ticker-selector"
                 className="mb-2"
                 emptyLabel="No tickers found."
+                autocomplete="off" 
+                autocorrect="off" 
+                autocapitalize="off"
             />
             {tickers.map(createButton)}
-            <Button onClick={() => addTicker(tickerInput)}>
-                Add ticker
+            <Button disabled={isLoading} onClick={isLoading ? null : () => addTicker(tickerInput)}>
+                {isLoading ? 'Loading' : 'Add ticker' }
             </Button>
+
+            <br />
+
+            {tickers.length > 0 ?
+            <Plot
+                data={tickers.map(stock => ({
+                    x: Object.keys(stock.prices).map(d => (new Date(parseInt(d))).toISOString()),
+                    y: Object.values(stock.prices),
+                    type: "scatter",
+                    mode: "lines+markets",
+                    name: stock.ticker
+                }))}
+
+                layout={{
+                    xaxis: {
+                        title: "Date",
+                        rangeslider: {}
+                    },
+                    yaxis: {
+                        title: "Price"
+                    }
+                }}
+            />
+
+            : <br />}
         </div>
     );
 }

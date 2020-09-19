@@ -6,7 +6,7 @@ export const UEFANavbar = () => {
     return (
         <Navbar bg="light" variant="light" className="justify-content-between">
             <Container>
-                <Navbar.Brand href="/"><b>merx.</b> | finance education</Navbar.Brand>
+                <Navbar.Brand href="/"><b>merx.</b>&nbsp;<span className="hide-mobile">| finance education</span></Navbar.Brand>
                 <div className="justify-content-end">
                     {Meteor.userId() ? (
                         <React.Fragment>

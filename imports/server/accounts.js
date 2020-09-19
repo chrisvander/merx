@@ -3,7 +3,6 @@ import { Accounts } from 'meteor/accounts-base';
 
 Meteor.methods({
     createUser(email, password, cb) {
-        console.log("createUser called")
         Accounts.createUser({ email, username: email, password }, err => {
             if (err) {
                 cb(err)
@@ -12,5 +11,7 @@ Meteor.methods({
                 cb(null, Meteor.userId())
             }
         })
+    },
+    updatePreferences(userID, preference) {
     }
 });

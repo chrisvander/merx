@@ -1,10 +1,15 @@
 import React from 'react';
 import CourseOne from '../courses/courseOne.mdx';
+import CourseTwo from '../courses/courseTwo.mdx';
+import CourseThree from '../courses/courseThree.mdx';
+
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 const courseComponents = {
-    1: <CourseOne />
+    1: <CourseOne />,
+    2: <CourseTwo />,
+    3: <CourseThree />
 }
 
 export const Course = ({ match: { params: { courseID }}}) => {

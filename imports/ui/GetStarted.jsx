@@ -1,8 +1,50 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
-import { Form, Button, Modal, Container } from 'react-bootstrap';
+import { Form, Button, Modal, Container, Card } from 'react-bootstrap';
 import { Accounts } from 'meteor/accounts-base';
 
+const reasons = [
+    [
+        "Literacy", 
+        "Get an educational foundation in finance, investing, and understanding how to make your money work for you.",
+        "Choose this option if you're stable financially and just looking to learn more about how to optimize your existing investments or want to know how to utilize some level of savings."
+    ],
+    [
+        "Stability", 
+        "Create financial stability so in times of economic downturn you have a backup plan.",
+        "Choose this option if you lack savings or don't know how to afford bills and your living expenses if you didn't have a job."
+    ],
+    [
+        "Retirement", 
+        "Ensure you are targeting to retire with enough money to last you for the rest of your life.",
+        "Choose this option if you have enough savings for if the market went into a downturn or you lost a job, but want to set yourself up well to retire."
+    ],
+    [
+        "Wealth", 
+        "Grow your wealth to give you more options to do what you want with your life.",
+        "Choose this option if you have disposable savings that you want to put to work."
+    ]
+]
+
+const CardDisplay = ({ title, body, reason, onClick }) => {
+    const [selected, setSelected] = useState(false);
+
+    return (
+        <Card 
+            className={`mt-4 selectable-card ${selected && 'border-green'}`}
+            onClick={() => {
+                setSelected(true);
+                onClick();
+            }}>
+            <Card.Body>
+                <Card.Title>{title}</Card.Title>
+                <Card.Subtitle>{body}</Card.Subtitle>
+                <br />
+                <Card.Text>{reason}</Card.Text>
+            </Card.Body>
+        </Card>
+    )
+}
 
 class GetStarted extends React.Component {
     constructor(props) {
@@ -34,9 +76,17 @@ class GetStarted extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Container style={{ display: 'flex', height: '100vh', alignItems: 'center'}}>
-                    <h1 className="mt-6">What are your financial goals?</h1>
-                    <Button onClick={() => this.setState({dialog: true})}>Open</Button>
+                <Container style={{ display: 'flex', height: '80vh', alignItems: 'center'}}>
+                    <div className="w-100">
+                        <h1 className="mt-6">What are your financial goals?</h1>
+                        {reasons.map(([title, body, reason]) => 
+                            <CardDisplay 
+                                title={title} 
+                                body={body} 
+                                reason={reason} 
+                                onClick={() => this.setState({ dialog: true })}/>
+                        )}
+                    </div>
                 </Container>
                 {this.state.dialog && <React.Fragment>
                     <div style={{ 

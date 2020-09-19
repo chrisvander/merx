@@ -5,3 +5,28 @@ body {
 .hover-white:hover {
   color: white !important;
 }
+
+.selectable-card {
+  background-color: white;
+  transition: background-color 0.4s;
+  cursor: pointer;
+}
+
+.selectable-card:hover {
+  background-color: gainsboro;
+}
+
+.border-green {
+  border-color: green !important;
+  background-color: rgba(160,255,160,0.2)
+}
+
+.js-plotly-plot {
+  width: 100%;
+}
+
+@media only screen and (max-width: 780px) {
+  .hide-mobile {
+    display: none;
+  }
+}
