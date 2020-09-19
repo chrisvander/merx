@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Container, Jumbotron } from 'react-bootstrap';
-import { Layout } from './Layout';
 
 export const WelcomePage = () => {
   return (

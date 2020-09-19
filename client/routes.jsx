@@ -1,28 +1,35 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { withRouter } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import { WelcomePage } from "/imports/ui/WelcomePage";
 import { LoginPage } from '../imports/ui/LoginPage';
 import GetStarted from '../imports/ui/GetStarted';
 import { Dashboard } from '../imports/ui/Dashboard';
 import { Logout } from '../imports/ui/Logout';
-import { Layout } from '../imports/ui/Layout';
+import { Error } from '../imports/ui/Error';
+import { UEFANavbar } from '../imports/ui/Navbar';
 
 const browserHistory = createBrowserHistory({ forceRefresh: true });
 
-export const renderRoutes = () => (
+const UntrackedRoutes = () => (
     <Router history={browserHistory}>
-        <Layout>
-            <Switch>
-                <Route exact path="/" component={withRouter(WelcomePage)} />
-                <Route exact path="/login" component={withRouter(LoginPage)} />
-                <Route exact path="/get-started" component={withRouter(GetStarted)} />
-                <Route exact path="/dashboard" component={withRouter(Dashboard)} />
-                <Route exact path="/logout" component={withRouter(Logout)} />
-                <Route path="/*" component={withRouter(WelcomePage)} />
-            </Switch>
-        </Layout>
+        <UEFANavbar />
+        <Switch>
+            <Route exact path="/" component={withRouter(WelcomePage)} />
+            <Route path="/login" component={withRouter(LoginPage)} />
+            <Route path="/get-started" component={withRouter(GetStarted)} />
+            <Route path="/dashboard" component={withRouter(Dashboard)} />
+            <Route path="/logout" component={withRouter(Logout)} />
+            <Route component={Error} />
+        </Switch>
     </Router>
 );
+
+export const Routes = withTracker(props => {
+    return {
+        user: Meteor.user()
+    }
+})(UntrackedRoutes);
