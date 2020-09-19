@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Jumbotron, Row, Col } from 'react-bootstrap';
+import { Container, Jumbotron, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 
 const reasons = [
   ["Literacy", "Get an educational foundation in finance, investing, and understanding how to make your money work for you."],
@@ -15,6 +17,14 @@ export const WelcomePage = () => {
         <Container>
           <h1>Welcome to <b>merx.</b></h1>
           <h3>We make financial education accessible for everyone.</h3>
+          <br />
+          {Meteor.userId() ? 
+            <Link to="/dashboard"><Button>Learning Dashboard</Button></Link>
+            : <Link to="/get-started"><Button style={{ 
+                borderColor: '#F64C72',
+                backgroundColor: '#F64C72' 
+            }}>Get Started</Button></Link>
+          }
         </Container>
       </Jumbotron>
       <Container>

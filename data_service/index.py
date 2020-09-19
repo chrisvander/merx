@@ -1,8 +1,7 @@
 '''
-request info about a certain stock
-URL Format: <url>/?mode=stock&stock=<stock>&beg=<start time>&<end time>&int=<interval>
+get stock tickers: URL/stock_tickers/
 
-http://localhost:5000/stock/?stock=APPL&start=2013-04-23&end=2013-04-24
+
 '''
 
 from flask import Flask, request, jsonify

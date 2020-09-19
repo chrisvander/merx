@@ -10,6 +10,7 @@ export const UEFANavbar = () => {
                 <div className="justify-content-end">
                     {Meteor.userId() ? (
                         <React.Fragment>
+                            <Button href="/profile" variant="light" className="mr-3">Profile</Button>
                             <Button href="/dashboard" variant="light" className="mr-3">Dashboard</Button>
                             <Button href="/logout" variant="danger" className="mr-3">Log Out</Button>
                         </React.Fragment>
