@@ -29,19 +29,6 @@ def query():
   # else:
   #   return "Invalid format: {} option is not supported".format(mode)
 
-
-def parse_dataframe(df, end_date):
-  print(df)
-  df = df.drop(['Open', 'High', 'Low', 'Volume', 'Dividend', 'Split', 'Adj_Open', 'Adj_High', 'Adj_Low', 'Adj_Close', 'Adj_Volume'], axis=1)
-
-  flag = False
-  for date in df.index:
-    if not flag and compare_date(parse_date(date), parse_date(end_date)):
-      flag = True
-    elif flag:
-      pd.drop(date)
-  return(df)
-
   # df_filtered = df[df['Date'][:3] >= end_date[:3]]
   # print(df_filtered)
   pass

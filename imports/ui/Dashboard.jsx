@@ -20,7 +20,6 @@ const courses = [
 ]
 
 export const Dashboard = (props) => {
-    console.log("DASHBOARD CREATED")
     return (
         <Container>
             <br /><br />

@@ -2,7 +2,6 @@ import React, { useState, useRef  } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
-import { Layout } from './Layout';
 import { Meteor } from 'meteor/meteor';
 
 export const LoginPage = (props) => {
