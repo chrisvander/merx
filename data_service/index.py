@@ -49,7 +49,7 @@ def get_history():
 
 @app.route('/stock-tickers/', methods=['GET'])
 def get_tickers():
-  return jsonify(['HD','DIS','MSFT','BA','MMM','PFE','NKE','JNJ','MCD','INTC','XOM','GS','JPM','AXP','V','IBM','UNH','PG','GE','KO','CSCO','CVX','CAT','MRK','WMT','VZ','UTX','TRV','AAPL'])
+  return jsonify({'HD': 'Home Depot','DIS': 'Disney','MSFT': 'Microsoft','BA': 'Boeing','MMM': '3M','PFE': 'Pfizer','NKE': 'Nike','JNJ': 'Johnson & Johnson','MCD': 'McDonalds','INTC': 'Intel','XOM': 'Exxon Mobil','GS': 'Goldman Sachs','JPM': 'JP Morgan','AXP': 'American Express','V': 'Visa','IBM': 'IBM','UNH': 'United Health','PG': 'Proctor & Gamble','GE': 'General Electric','KO': 'Coca-Cola','CSCO': 'Cisco Systems','CVX': 'Chevron','CAT': 'Caterpillar','MRK': 'Merck','WMT': 'Walmart','VZ': 'Verizon','UTX': 'Raytheon','TRV': 'Travelers' ,'AAPL': 'Apple'})
 
 @app.route('/bonds/', methods=['GET'])
 def get_bonds():
@@ -60,10 +60,10 @@ def get_bonds():
 
 @app.route('/returns/', methods=['GET'])
 def get_return():
-  # input = request.args
-  start_price = quandl.get("EOD/HD", start_date=input['2017-12-26'], end_date=input['2017-12-26'])
-  # start_price = quandl.get("EOD/" + ticker, start_date=input['start'], end_date=input['start'])['ask_price'][0]
-  return start_price.to_json()
+  input = request.args
+  start_price = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input['start'])['Close'][0])
+  end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
+  return 
 
 def request_stock(input):
   if 'stock' in input:
