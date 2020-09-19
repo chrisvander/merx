@@ -43,6 +43,8 @@ app = Flask(__name__)
 CORS(app)
 quandl.ApiConfig.api_key = 'uyxvXKZ3zKytArHDVdwR'
 
+ticker_to_company = {'HD': 'Home Depot','DIS': 'Disney','MSFT': 'Microsoft','BA': 'Boeing','MMM': '3M','PFE': 'Pfizer','NKE': 'Nike','JNJ': 'Johnson & Johnson','MCD': 'McDonalds','INTC': 'Intel','XOM': 'Exxon Mobil','GS': 'Goldman Sachs','JPM': 'JP Morgan','AXP': 'American Express','V': 'Visa','IBM': 'IBM','UNH': 'United Health','PG': 'Proctor & Gamble','GE': 'General Electric','KO': 'Coca-Cola','CSCO': 'Cisco Systems','CVX': 'Chevron','CAT': 'Caterpillar','MRK': 'Merck','WMT': 'Walmart','VZ': 'Verizon','UTX': 'Raytheon','TRV': 'Travelers' ,'AAPL': 'Apple'}
+
 @app.route('/stock-history/', methods=['GET'])
 def get_history():
   return request_stock(request.args)
@@ -58,6 +60,7 @@ def get_bonds():
   
   return df.to_json()
 
+<<<<<<< HEAD
 @app.route('/returns/', methods=['GET'])
 def get_return():
   input = request.args
@@ -66,6 +69,8 @@ def get_return():
   end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
   return 
 
+=======
+>>>>>>> f26e6a238e0647d8382bad501582ea0c1beaba1e
 def request_stock(input):
   if 'stock' in input:
     stock = input['stock']
