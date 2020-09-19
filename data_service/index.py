@@ -23,9 +23,7 @@ def get_tickers():
 def get_bonds():
   df = quandl.get_table('CHORD7/BD', date='2013-05-01', qopts={'columns':['date', 'ask_price']})
   print(df.index)
-  # for col in df.columns:
-  #   if col != 'date' or col != 'ask_price':
-  #     df.drop(col, axis=1)
+  
   return df.to_json()
 
 def request_stock(input):
