@@ -15,35 +15,8 @@ quandl.ApiConfig.api_key = 'uyxvXKZ3zKytArHDVdwR'
 def query():
   input = request.args
 
-  return quandl.get("EOD/" + input['stock'], column_index='1', start_date=input['start'], end_date=input['end']).to_json()
-  # input = {}
-  # input['stock'] = 'DIS'
-  # input['start_date'] = '2017-12-06'
-  # input['end_date'] = '2017-12-28'
+  output = request_stock(input)
 
-  # dataframe = quandl.get("EOD/" + input['stock'], start_date=input['start_date'])
-  # dataframe = parse_dataframe(dataframe, input['end_date'])
-  # return dataframe.to_json()[9:-1]
-  # if mode == "stock":
-  #   # get_stock_history(input)
-  #   return "Stock but a json"
-  # elif mode == "whatever":
-  #   return "Requesting whatever..."
-  # else:
-  #   return "Invalid format: {} option is not supported".format(mode)
-
-  # df_filtered = df[df['Date'][:3] >= end_date[:3]]
-  # print(df_filtered)
-  pass
-  # return dataframe
-
-def parse_date(date):
-  return {'year': int(str(date)[:4]), 'month': int(str(date)[5:7]), 'day': int(str(date)[8:10])}
-
-  if True: # option == 'stock':
-    output = request_stock(input)
-  else:
-    output = 'error: invalid address'
   return output
 
 def request_stock(input):
@@ -52,18 +25,19 @@ def request_stock(input):
   else:
     return 'error: must provide stock ticker'
 
-  if 'start' in input:
-    start = input['start']
-  else:
-    start = None
+  # if 'start' in input:
+  #   start = input['start']
+  # else:
+  #   start = None
 
-  if 'end' in input:
-    end = input['end']
-  else:
-    end = None
+  # if 'end' in input:
+  #   end = input['end']
+  # else:
+  #   end = None
 
-  return quandl.get("EOD/" + stock, start_date=start, end_date=end).to_json()
+  return quandl.get("EOD/" + stock).to_json()
 ''', start_date=start, end_date=end'''
+
 # def parse_date(date):
 #   return {'year': int(str(date)[:4]), 'month': int(str(date)[5:7]), 'day': int(str(date)[8:10])}
 
