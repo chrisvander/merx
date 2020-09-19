@@ -61,7 +61,8 @@ def get_bonds():
 @app.route('/returns/', methods=['GET'])
 def get_return():
   input = request.args
-  start_price = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input['start'])['Close'][0])
+  prices = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input[
+  returns = prices / prices.rolling(1) - 1'start'])['Close'][0])
   end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
   return 
 

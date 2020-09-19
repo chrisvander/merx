@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 
 Accounts.onCreateUser((options, user) => {
+    console.log(user)
     const customizedUser = Object.assign({
       reason: 1
     }, user);
@@ -14,8 +15,8 @@ Accounts.onCreateUser((options, user) => {
 });
 
 Meteor.methods({
-    createUser(email, password, cb) {
-        Accounts.createUser({ email, username: email, password }, err => {
+    createUser(email, password, key, cb) {
+        Accounts.createUser({ email, username: email, password, profile: { name: 'Bob', reason: key } }, err => {
             if (err) {
                 cb(err)
             }

@@ -85,7 +85,8 @@ export const StockGraph  = (props) => {
                     x: Object.keys(stock.prices).map(d => (new Date(parseInt(d))).toISOString()),
                     y: Object.values(stock.prices),
                     type: "scatter",
-                    mode: "lines+markets",
+                    mode: "lines",
+                    line: { color: stock.color },
                     name: stock.ticker
                 }))}
 

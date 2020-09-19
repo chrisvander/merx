@@ -1,4 +1,6 @@
 import { RiskGraph } from '../ui/RiskGraph';
+import { StockGraph } from '../ui/StockGraph';
+import { FixedIncome } from '../ui/FixedIncome';
 
 # Introduction to investing
 
@@ -19,16 +21,44 @@ There are a ton of asset classes, and we'll cover a few of the most common ones:
 - Fixed income
 - Commodities
 - Real estate
+- Foreign currencies
 - Cash
 
-What are the differences between each? Which one is right for you?
-
-
-### Equities
-Equities represen
-
-
-<br /><br /><br /><br />
-
+What are the differences between each? Which one is right for you? It depends on your **risk tolerance**! Each asset class is different, and thus has a different expected return and level of risk.
 
 <RiskGraph />
+
+---
+
+### Equities
+Equities represent partial ownership of a company. The value of that ownership changes over time with the value of the company!
+
+They're extremely volatile in the short term but tend to outperform other asset classes over long periods. When you buy a stock of a company, you're investing in their equity.a
+
+Here's a chart that shows the price of different equities over time! Select a ticker with the text box below and click **Add ticker** to see the prices. You can add more than one, and you can click on a ticker to remove it.
+
+<StockGraph />
+
+---
+
+### Fixed income
+Fixed income is exactly what it sounds like: you invest and get money on a fixed schedule. The simplest example of fixed income is a **U.S. treasury**. When you buy a U.S. treasury, you're lending money to the U.S. government with the idea that they will pay you back in the future. In doing so, the government pays back slightly more than you gave them (they're paying interest)! So if you lend them $1,000 you may receive $1,010 in the future.
+
+You can lend similarly to corporations. Corporations issue **bonds** where they ask for investors to lend them money in return for a promise to pay the investors back, with interest. With bonds, rather than getting a single lump sum payment at the end of the duration, you typically get paid every 6 months or 1 year. So if you buy a company's bond for $1,000 with a stated rate of 10%, that means every year they'll pay you $100 (10% of $1,000) until the bond expires and they pay you your full $1,000 back!
+
+Here's an example of a $1,000 bond with a 5% interest rate that expires in 8 years:
+
+<FixedIncome />
+
+---
+
+### Commodities
+Commodities are goods used in commerce that are interchangeable with other goods of the same type; they're typically used as inputs in the production of other goods. When they're traded, they must meet a specific standard so the quality of commodities shouldn't vary from producer to producer. Common examples include:
+- Grains
+- Gold and other metals
+- Beef
+- Oil
+- Natural gas
+They're very dependent on supply and demand dynamics. For example, a specific type of oil price actually went negative on April 20th, 2020! They were negative because no one wanted oil - factories were shut down, airlines didn't need as much, etc.
+
+<br /><br /><br /><br />

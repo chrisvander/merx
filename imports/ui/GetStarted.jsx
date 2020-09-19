@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { Form, Button, Modal, Container, Card } from 'react-bootstrap';
 import { Accounts } from 'meteor/accounts-base';
+import { Redirect } from 'react-router-dom';
 
 const reasons = [
     [
@@ -30,13 +31,12 @@ const reasons = [
     ]
 ]
 
-const CardDisplay = ({ title, body, reason, onClick, selected, setSelected }) => {
+const CardDisplay = ({ title, body, reason, selected, setSelected }) => {
     return (
         <Card 
             className={`mt-4 selectable-card ${selected && 'border-green'}`}
             onClick={() => {
                 setSelected();
-                onClick();
             }}>
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
@@ -55,7 +55,8 @@ class GetStarted extends React.Component {
         this.password = React.createRef();
         this.state = {
             dialog: false,
-            selected: null
+            selected: null,
+            redirect: false
         }
     }
 
@@ -67,17 +68,17 @@ class GetStarted extends React.Component {
 
         console.log("FORM SUBMITTED", email, password);
 
-        Meteor.call("createUser", { email, password }, (err, userId) => {
-            Accounts.update({ _id: userID }, { selected: this.state.key });
+        Meteor.call("createUser", { email, password, reason: this.state.key }, (err, userId) => {
             if (err) {
                 console.log(err);
             } else {
-                this.props.history.push("/dashboard");
+                this.setState({ redirect: true });
             }
         });
     }
 
     render() {
+        if (this.state.redirect) <Redirect to="/dashboard" />
         return (
             <React.Fragment>
                 <Container style={{ display: 'flex', height: '80vh', alignItems: 'center'}}>
@@ -114,7 +115,7 @@ class GetStarted extends React.Component {
                         <Modal.Body>
                             <h1>Get Started</h1>
                             <br />
-                            <Form onSubmit={this.handleSubmit.bind(this)}>
+                            <Form>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control ref={this.email} type="email" placeholder="Enter email" />
@@ -127,7 +128,7 @@ class GetStarted extends React.Component {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control ref={this.password} type="password" placeholder="Password" />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" onClick={this.handleSubmit.bind(this)}>
                                     Submit
                                 </Button>
                                 &nbsp;

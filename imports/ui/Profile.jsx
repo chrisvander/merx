@@ -5,11 +5,16 @@ import { Meteor } from 'meteor/meteor';
 
 
 export const Profile = () => {
-    const accounts = Meteor.users.findOne({ _id: Meteor.userId() })
+    const account = Meteor.users.findOne({ _id: Meteor.userId() }, { name: 'bob' })
+    if (account == null) {
+        return "Not logged in"
+    }
+    console.log(account)
+    console.log(account.reason)
     return (
         <Container>
             <h1 className="mt-5">Hello, Bob</h1>
-            {JSON.stringify(accounts)}
+            {JSON.stringify(account)}
         </Container>
     )
 }
