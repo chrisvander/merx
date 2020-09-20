@@ -1,27 +1,22 @@
 import React from 'react';
-import CourseOne from '../courses/courseOne.mdx';
-import CourseTwo from '../courses/courseTwo.mdx';
-import CourseThree from '../courses/courseThree.mdx';
-
+import PortfolioPlayground from '../experiments/portfolio.mdx';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
-const courseComponents = {
-    1: <CourseOne />,
-    2: <CourseTwo />,
-    3: <CourseThree />
+const experimentComponents = {
+    1: <PortfolioPlayground />,
 }
 
-export const Course = ({ match: { params: { courseID }}}) => {
+export const Experiments = ({ match: { params: { experimentID }}}) => {
   return (
-    <Container>
+    <Container style={{minHeight: '90vh'}}>
         <br />
         <Link to='/dashboard'>
             <p style={{ color: 'gray', cursor: 'pointer' }}>
                 <i className="fas fa-arrow-left" />&nbsp;&nbsp;Back to Dashboard
             </p>
         </Link>
-        {courseComponents[courseID]}
+        {experimentComponents[experimentID]}
     </Container>
   );
 }

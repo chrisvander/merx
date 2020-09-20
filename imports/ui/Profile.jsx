@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Jumbotron, Button, Form, Col, Row, Card } from 'react-bootstrap';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
-import { CardDisplay, reasons } from './GetStarted';
+import { CardDisplay } from './GetStarted';
+import { reasons } from './data/reasons';
 
 
 export const Profile = () => {
@@ -33,7 +34,7 @@ export const Profile = () => {
                     <Col md={4}>
                         <h3>User Details</h3>
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}><b>Name</b></Form.Label>
+                            <Form.Label column sm={4}><b>First Name</b></Form.Label>
                             <Col sm={8}>
                                 {account && <Form.Control onChange={e => {
                                     Meteor.users.update(
@@ -49,7 +50,7 @@ export const Profile = () => {
                                     );
                                 }} plaintext={!editing} readOnly={!editing} defaultValue={account.profile.name} type="text" placeholder="Bob Smith" />}
                             </Col>
-                            <Form.Label column sm={4}><b>Username</b></Form.Label>
+                            <Form.Label column sm={4}><b>Email</b></Form.Label>
                             <Col sm={8}>
                                 
                                 {account && <Form.Control onChange={e => {
@@ -91,6 +92,7 @@ export const Profile = () => {
                     </Col>
                 </Row>
             </Container>
+            <br /><br />
         </React.Fragment>
     )
 }

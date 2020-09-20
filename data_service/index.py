@@ -46,27 +46,18 @@ quandl.ApiConfig.api_key = 'uyxvXKZ3zKytArHDVdwR'
 
 ticker_to_company = {'HD': 'Home Depot','DIS': 'Disney','MSFT': 'Microsoft','BA': 'Boeing','MMM': '3M','PFE': 'Pfizer','NKE': 'Nike','JNJ': 'Johnson & Johnson','MCD': 'McDonalds','INTC': 'Intel','XOM': 'Exxon Mobil','GS': 'Goldman Sachs','JPM': 'JP Morgan','AXP': 'American Express','V': 'Visa','IBM': 'IBM','UNH': 'United Health','PG': 'Proctor & Gamble','GE': 'General Electric','KO': 'Coca-Cola','CSCO': 'Cisco Systems','CVX': 'Chevron','CAT': 'Caterpillar','MRK': 'Merck','WMT': 'Walmart','VZ': 'Verizon','UTX': 'Raytheon','TRV': 'Travelers' ,'AAPL': 'Apple'}
 
+all_prices = pd.DataFrame()
+
+for ticker in ticker_to_company:
+    close_prices = quandl.get("EOD/{}".format(ticker))["Close"]
+    close_prices.name = ticker
+    all_prices[ticker] = close_prices
+
+print("Prices loaded")
+
 @app.route('/stock-history/', methods=['GET'])
 def get_history():
   return request_stock(request.args)
-
-@app.route('/stock-tickers/', methods=['GET'])
-def get_tickers():
-  return jsonify({'HD': 'Home Depot','DIS': 'Disney','MSFT': 'Microsoft','BA': 'Boeing','MMM': '3M','PFE': 'Pfizer','NKE': 'Nike','JNJ': 'Johnson & Johnson','MCD': 'McDonalds','INTC': 'Intel','XOM': 'Exxon Mobil','GS': 'Goldman Sachs','JPM': 'JP Morgan','AXP': 'American Express','V': 'Visa','IBM': 'IBM','UNH': 'United Health','PG': 'Proctor & Gamble','GE': 'General Electric','KO': 'Coca-Cola','CSCO': 'Cisco Systems','CVX': 'Chevron','CAT': 'Caterpillar','MRK': 'Merck','WMT': 'Walmart','VZ': 'Verizon','UTX': 'Raytheon','TRV': 'Travelers' ,'AAPL': 'Apple'})
-
-@app.route('/bonds/', methods=['GET'])
-def get_bonds():
-  df = quandl.get_table('CHORD7/BD', date='2013-05-01', qopts={'columns':['date', 'ask_price']})
-  print(df.index)
-  
-  return df.to_json()
-
-@app.route('/returns/', methods=['GET'])
-def get_return():
-  input = request.args
-  prices = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input['start'])['Close'][0])
-  # end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
-  return 
 
 # Load the file once when the server gets started
 wti_prices = pd.read_csv("data_service/wti_prices.csv")
@@ -76,7 +67,7 @@ def get_wti_prices():
   return wti_prices.to_json()
 
 # Load the file once when the server gets started
-etf_prices = pd.read_csv("data_service/etf_prices.csv"))
+etf_prices = pd.read_csv("data_service/etf_prices.csv")
 
 @app.route('/etf_prices/', methods=['GET'])
 def get_etf_prices():
@@ -88,19 +79,11 @@ def request_stock(input):
   else:
     return 'error: must provide stock ticker'
 
-  df = quandl.get("EOD/" + stock)
+  return all_prices[[stock]].to_json()
 
-  if 'start' in input:
-    start = input['start']
-  else:
-    start = str(df.index[0])[:10]
-
-  if 'end' in input:
-    end = input['end']
-  else:
-    end = str(df.index[-1])[:10]
-
-  return quandl.get("EOD/" + stock, start_date=start, end_date=end)["Close"].to_json()
+@app.route("/all-prices/", methods=["GET"])
+def get_all_prices():
+  return all_prices.to_json()
 
 if __name__ == "__main__":
   app.run(debug=False, port=5000)

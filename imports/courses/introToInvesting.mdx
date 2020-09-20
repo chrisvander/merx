@@ -1,17 +1,16 @@
-import { RiskGraph } from '../ui/RiskGraph';
-import { StockGraph } from '../ui/StockGraph';
-import { FixedIncome } from '../ui/FixedIncome';
-import { OilPrices } from '../ui/OilPrices';
-import { Meteor } from 'meteor/meteor';
+import { RiskGraph } from '../ui/graphs/RiskGraph';
+import { StockGraph } from '../ui/graphs/StockGraph';
+import { FixedIncome } from '../ui/graphs/FixedIncome';
+import { OilPrices } from '../ui/graphs/OilPrices';
+import UserName from '../ui/components/UserName';
+import Dictionary from '../ui/components/Dictionary';
 
 # Introduction to Investing
 
-Over the next few courses, we're hoping to answer a few questions for you:
+Hi <UserName />! Over the next few courses, we're hoping to answer a few questions for you:
 - *What do I do with my money?*
-- *What can I invest in?*
+- *What can I <Dictionary text="invest" /> in?*
 - *How do I decide where to invest?*
-
-Of course, <span>{Meteor.user().profile.name}</span>
 
 ---
 
@@ -28,7 +27,7 @@ There are a ton of asset classes, and we'll cover a few of the most common ones:
 - Foreign currencies
 - Cash
 
-What are the differences between each? Which one is right for you? It depends on your **risk tolerance**! Each asset class is different, and thus has a different expected return and level of risk.
+What are the differences between each? Which one is right for you? It depends on your **<Dictionary text="risk tolerance" />**! Each asset class is different, and thus has a different expected return and level of risk.
 
 <RiskGraph />
 
@@ -37,7 +36,7 @@ What are the differences between each? Which one is right for you? It depends on
 ### Equities
 Equities represent partial ownership of a company. The value of that ownership changes over time with the value of the company!
 
-They're extremely volatile in the short term but tend to outperform other asset classes over long periods. When you buy a stock of a company, you're investing in their equity.
+They're extremely <Dictionary text="volatile" /> in the short term but tend to outperform other asset classes over long periods. When you buy a stock of a company, you're investing in their equity.
 
 Here's a chart that shows the price of different equities over time! Select a ticker with the text box below and click **Add ticker** to see the prices. You can add more than one, and you can click on a ticker to remove it.
 

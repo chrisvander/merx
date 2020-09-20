@@ -1,40 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
-import { Form, Button, Modal, Container, Card } from 'react-bootstrap';
+import { Form, Button, Modal, Container, Card, Alert } from 'react-bootstrap';
 import { Accounts } from 'meteor/accounts-base';
 import { Redirect } from 'react-router-dom';
-
-export const reasons = [
-    [
-        1,
-        "Literacy", 
-        "Get an educational foundation in finance, investing, and understanding how to make your money work for you.",
-        "Choose this option if you're stable financially and just looking to learn more about how to optimize your existing investments or want to know how to utilize some level of savings."
-    ],
-    [
-        2,
-        "Stability", 
-        "Create financial stability so in times of economic downturn you have a backup plan.",
-        "Choose this option if you lack savings or don't know how to afford bills and your living expenses if you didn't have a job."
-    ],
-    [
-        3,
-        "Retirement", 
-        "Ensure you are targeting to retire with enough money to last you for the rest of your life.",
-        "Choose this option if you have enough savings for if the market went into a downturn or you lost a job, but want to set yourself up well to retire."
-    ],
-    [
-        4,
-        "Wealth", 
-        "Grow your wealth to give you more options to do what you want with your life.",
-        "Choose this option if you have disposable savings that you want to put to work."
-    ]
-]
+import { reasons } from './data/reasons';
 
 export const CardDisplay = ({ title, body, reason, selected, setSelected }) => {
-    
     return (
-        <Card 
+        <Card
             className={`mt-4 selectable-card ${selected && 'border-green'}`}
             onClick={() => {
                 setSelected();
@@ -54,24 +27,29 @@ class GetStarted extends React.Component {
         super(props);
         this.email = React.createRef();
         this.password = React.createRef();
+        this.name = React.createRef();
+
         this.state = {
             dialog: false,
             selected: null,
-            redirect: false
+            redirect: false,
+            error: null
         }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        
+
         const email = this.email.current.value;
         const password = this.password.current.value;
+        const name = this.name.current.value;
 
         console.log("FORM SUBMITTED", email, password);
 
-        Meteor.call("createCustomUser", email, password, this.state.selected, (err, user) => {
+        Meteor.call("createCustomUser", email, password, this.state.selected, name, (err) => {
             if (err) {
                 console.error(err);
+                this.setState({ error: err });
             } else {
                 Meteor.loginWithPassword(email, password, err => {
                     if (err) console.error(err)
@@ -85,41 +63,50 @@ class GetStarted extends React.Component {
         if (this.state.redirect) return <Redirect to="/dashboard" />
         return (
             <React.Fragment>
-                <Container style={{ display: 'flex', height: '80vh', alignItems: 'center'}}>
-                    <div className="w-100">
+                <Container style={{ display: 'flex', minHeight: '80vh', alignItems: 'center' }}>
+                    <div className="w-100 mt-8 mb-8">
                         <h1 className="mt-6">What are your financial goals?</h1>
-                        {reasons.map(([key, title, body, reason]) => 
-                            <CardDisplay 
-                                title={title} 
-                                body={body} 
-                                reason={reason} 
+                        {reasons.map(([key, title, body, reason]) =>
+                            <CardDisplay
+                                key={key}
+                                title={title}
+                                body={body}
+                                reason={reason}
                                 selected={this.state.selected === key}
-                                setSelected={() => this.setState({ selected: key })}/>
+                                setSelected={() => this.setState({ selected: key })} />
                         )}
-                        { this.state.selected != null && <Button className="mt-5" onClick={() => this.setState({ dialog: true })}>Continue</Button>}
+                        {this.state.selected != null && <Button className="mt-5" onClick={() => this.setState({ dialog: true })}>Continue</Button>}
                     </div>
                 </Container>
                 {this.state.dialog && <React.Fragment>
-                    <div style={{ 
-                        height: '100vh', 
-                        width: '100vw', 
-                        position: 'absolute', 
-                        top:0,
-                        left:0,
-                        backgroundColor:'black', 
+                    <div style={{
+                        height: '100vh',
+                        width: '100vw',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        backgroundColor: 'black',
                         opacity: 0.4
                     }} />
-                    <Modal.Dialog className="pt-4" style={{ 
-                        position: 'absolute', 
+                    <Modal.Dialog className="pt-4" style={{
+                        position: 'absolute',
                         top: '100px',
                         left: '50%',
                         transform: 'translate(-50%, 0)',
-                        minWidth: 320
+                        minWidth: 320,
+                        borderRadius: 20
                     }}>
-                        <Modal.Body>
+                        <Modal.Body style={{ padding: '2em' }}>
                             <h1>Get Started</h1>
+                            {this.state.error && <Alert variant="danger">
+                                {this.state.error.message}
+                            </Alert>}
                             <br />
                             <Form>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control ref={this.name} type="text" placeholder="Enter your first name" />
+                                </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control ref={this.email} type="email" placeholder="Enter email" />

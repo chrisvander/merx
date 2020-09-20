@@ -6,11 +6,12 @@ import Plot from 'react-plotly.js';
 
 
 const colors = ["red", "purple", "green", "gray", "orange"]
-const tickerWhitelist = ["HD","DIS","MSFT","BA","MMM","PFE","NKE","JNJ","MCD","INTC","XOM","GS","JPM","AXP","V","IBM","UNH","PG","GE","KO","CSCO","CVX","CAT","MRK","WMT","VZ","UTX","TRV","AAPL"]
+const tickerWhitelist = ["HD","DIS","MSFT","BA","MMM","PFE","JNJ","MCD","INTC","XOM","GS","JPM","AXP","IBM","UNH","PG","GE","KO","CSCO","CVX","CAT","MRK","WMT","VZ","UTX","TRV"]
 
 export const StockGraph  = (props) => {
     const [tickers, setTickers] = useState([]);
     const [counter, setCounter] = useState(0);
+    const [allPrices, setAllPrices] = useState([]);
     const [tickerInput, setTickerInput] = useState("");
     const [isLoading, setLoading] = useState(false);
 
@@ -21,22 +22,31 @@ export const StockGraph  = (props) => {
         tickersSelected.forEach(ticker => {
             if (tickerWhitelist.includes(ticker)) {
                 setLoading(true);
-                fetch("http://localhost:5000/stock-history?stock=" + ticker)
-                    .then(res => res.json())
-                    .then(res => {
-                        setTickers([...tickers, {
-                            key: counter,
-                            color: colors[counter % colors.length],
-                            ticker,
-                            prices: res
-                        }]);
-                        setLoading(false);
-                    });
-    
+                setTickers([...tickers, {
+                    key: counter,
+                    color: colors[counter % colors.length],
+                    ticker,
+                    prices: allPrices[ticker],
+                    proportion: Object.values(allPrices[ticker])[0]
+                }])
+                setLoading(false);
                 setCounter(counter + 1);
             }
         })
     }
+
+    const fetchAllPrices = () => {
+        setLoading(true);
+        fetch("http://localhost:5000/all-prices/")
+            .then(res => res.json())
+            .then(res => {
+                setAllPrices(res);
+                setLoading(false);
+            })
+        
+    }
+
+    useEffect(() => fetchAllPrices(), [])
 
     const removeTicker = key => {
         setTickers(tickers.filter(stock => stock.key != key))
@@ -62,7 +72,7 @@ export const StockGraph  = (props) => {
         <div>
             <Typeahead
                 onChange={selected => setTickerInput(selected)}
-                options={tickerWhitelist}
+                options={tickerWhitelist.filter(ticker => !tickers.map(s => s.ticker).includes(ticker))}
                 placeholder="Ticker"
                 id="ticker-selector"
                 className="mb-2"

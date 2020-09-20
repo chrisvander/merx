@@ -1,0 +1,11 @@
+import { PortfolioManager } from '../ui/PortfolioManager';
+
+## Correlation
+
+Correlation shows the **strength of a relationship between two variables** and is expressed numerically by the correlation coefficient. The correlation coefficient's values range **between -1.0 and 1.0**. A perfect positive correlation means that the correlation coefficient is exactly 1. This implies that as one security moves, either up or down, the other security moves in lockstep, in the same direction. A perfect negative correlation means that two assets move in opposite directions, while a zero correlation implies no linear relationship at all.
+
+For example, large-cap mutual funds generally have a high positive correlation to the Standard and Poor's (S&P) 500 Index or nearly one. Small-cap stocks have a positive correlation to the S&P, but it's not as high or approximately 0.8.
+
+When you're creating your portfolio, you generally want to **pick stocks that have low correlation with each other**. This way, if one of your assets goes down in price, they don't all follow!
+
+<PortfolioManager portfolio={false} corr={true} />

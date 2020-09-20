@@ -24,6 +24,65 @@ body {
 .js-plotly-plot {
   width: 100%;
 }
+.footer-bg {
+  min-height: 120px;
+  width: 100%;
+  background-color: #EBEBEB;
+}
+
+.btn-primary {
+  border-color: #F64C72 !important;
+  background-color:  #F64C72 !important;
+}
+
+.btn-danger {
+  border-color: #553D67 !important;
+  background-color:  #553D67 !important;
+}
+
+.hoverable-text {
+  text-decoration: underline dashed rgb(63, 154, 223);
+  text-decoration-thickness: 2px;
+  -webkit-text-decoration: underline dashed rgb(63, 154, 223);
+  -webkit-text-decoration-thickness: 2px;
+}
+
+.tooltip {
+  max-width: 300px;
+}
+
+.floating-pink-card {
+  border-width: 3px !important;
+  border-color: black !important;
+  padding: 1em;
+  border-radius: 10px !important;
+  z-index: 4 !important;
+  position: relative;
+  min-height: 260px;
+  margin-top: 20px;
+}
+
+.pink-bg::before {
+  content: '.';
+  display: block;
+  position: absolute;
+  background-color: #F64C72;
+  color: #F64C72;
+  height: 90%;
+  width: 90%;
+  margin: -1.5em;
+  margin-top: 2.4em;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.wavy-bg {
+  padding-top: 2em;
+  min-height: 700px;
+  background-image: url("/wavylines.svg");
+  background-size: cover;
+  background-position-y: center;
+}
 
 @media only screen and (max-width: 780px) {
   .hide-mobile {

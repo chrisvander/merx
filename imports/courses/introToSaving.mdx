@@ -1,0 +1,42 @@
+import { SimpleVsCompoundGraph } from '../ui/InterestGraph';
+import { CompoundGraphx2 } from '../ui/InterestGraph';
+
+# Introduction to Saving
+
+**What is the premise of a savings account?**
+
+A bank will hold onto your money for some time. They are allowed to use your money to make more money for the amount of time that it 
+is in the bank. The bank is confident enough in their ability to do this, so they other you a reward in the form of interest. A bank 
+will give you more money that you put in. So, it's a win-win situation. You make a small percentage of interest off the cash you have 
+saved, and the bank gets to use your money to leverage more money while it's in there. 
+
+___
+
+**Interest: Simple versus Compound**
+
+Imagine you have $5000 in the bank with 10% interest per year. Using the formula *($ amount) x (% interest) / 100 *, one year later you will have $100 in interest. 
+With simple interest, to the amount earned from interest is only based on the initial deposit. That means every year you will gain $100. With compound interest, 
+you add the interest back into the acccount and determine next year's interest off of that number. So year two you'll make 10% of $1100 dollars. This slight 
+difference actually makes a huge difference over time. 
+
+<SimpleVsCompoundGraph init={5000} percent={10} num_periods={30} payment={0} />
+
+___
+
+**Importance of Saving Early**
+
+If you're familiar with your math terms, simple interest (with no additional payments) models as a linear curve and the compound models as an exponential. 
+However with any savings account, you shouldn't make one inital deposit and let it sit, but rather contribute small amounts over time. Even better, you 
+setup a budget and allocate money every month to your savings. A good rule of thumb is that 20% of your income after tax should go towards saving and paying off debts. 
+
+For example; if you make $50,000 per year after tax, following the rule of thumb this $20,000 per year. Let's say that $10,000 is going into your retirement account per year. 
+For this type of account, a 7% interest rate is reasonable. Let's also assume that you found **merx** so you were savvy enough to start investing at 25. If you retire at 65,
+that gives us ***40 years*** of compound interest. Let's also setup a second senario where you don't start investing until you're 30 and still withdraw at 65. 
+Here's what that looks like
+
+<CompoundGraphx2 init={0} percent={8} num_periods={40} payment={10000} offset={5} />
+
+**Holy cow 3 million dollars!!**
+
+And those 5 years of delay that saved you $50,000 in the short term, ended up costing you $1,000,000 from your retirement. Now there are a lot of assumptions made but the 
+numbers used are attainable. The takeaway here should be that you *need* to start saving early. One of the most valuable things you can leverage is time.

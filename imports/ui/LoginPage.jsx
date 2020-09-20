@@ -21,7 +21,7 @@ export const LoginPage = (props) => {
   // if (redirect) return <Redirect to='/dashboard' />
   return (
     <Modal.Dialog>
-      <Modal.Body>
+      <Modal.Body style={{ padding: '2em' }}>
         <h1>Login</h1>
         <br />
         <Form onSubmit={login}>

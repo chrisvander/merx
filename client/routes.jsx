@@ -11,7 +11,9 @@ import { Dashboard } from '../imports/ui/Dashboard';
 import { Logout } from '../imports/ui/Logout';
 import { Error } from '../imports/ui/Error';
 import { UEFANavbar } from '../imports/ui/Navbar';
-import { Course } from '../imports/ui/Course';
+import { Footer } from '../imports/ui/Footer';
+import { Courses } from '../imports/ui/Courses';
+import { Experiments } from '../imports/ui/Experiments';
 import { Profile } from '../imports/ui/Profile';
 
 const browserHistory = createBrowserHistory({ forceRefresh: true });
@@ -24,11 +26,13 @@ const UntrackedRoutes = () => (
             <Route path="/login" component={withRouter(LoginPage)} />
             <Route path="/get-started" component={withRouter(GetStarted)} />
             <Route path="/dashboard" component={withRouter(Dashboard)} />
-            <Route path="/course/:courseID" render = {props => <Course {...props} />} />
+            <Route path="/course/:courseID" render = {props => <Courses {...props} />} />
+            <Route path="/experiment/:experimentID" render = {props => <Experiments {...props} />} />
             <Route path="/logout" component={withRouter(Logout)} />
             <Route path="/profile" component={Profile} />
             <Route component={Error} />
         </Switch>
+        <Footer />
     </Router>
 );
 
