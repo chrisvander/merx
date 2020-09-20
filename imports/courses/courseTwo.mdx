@@ -1,12 +1,13 @@
-<h1>Saving</h1>
+import { InterestGraph } from '../ui/InterestGraph';
+
+# Introduction to Saving
 
 **What is the premise of a savings account?**
 
 A bank will hold onto your money for some time. They are allowed to use your money to make more money for the amount of time that it 
 is in the bank. The bank is confident enough in their ability to do this, so they other you a reward in the form of interest. A bank 
 will give you more money that you put in. So, it's a win-win situation. You make a small percentage of interest off the cash you have 
-saved, and the bank gets to use your money to leverage more money while it's in there. There are a few nuances to different types of 
-savings accounts that make a big difference in the long run.
+saved, and the bank gets to use your money to leverage more money while it's in there. 
 
 ___
 
@@ -14,8 +15,23 @@ ___
 
 With any form of income, you have to pay taxes to the government. Some accounts will allow you to divert money from your paycheck 
 before it gets taxed into a savings account. On the contrary, some accounts will only take income that has already been taxed.
-However, when you want to cash in on this savings account, the Pre-tax account *still needs to be taxed* The post-tax account doesn't. 
+However, when you want to cash in on this savings account, the Pre-tax account *still needs to be taxed*. The post-tax account doesn't. 
 A good example is the Traditional IRA versus the Roth IRA. IRA simply stands for Induvidual Retirement Account. A Traditional IRA is pre-tax 
 and a Roth IRA is post-tax. With interest, over time, you would rather pay tax on the smaller intial amount versus the larger amount 
 that includes interest.
 
+___
+
+**Interest: Simple versus Compound**
+
+Imagine you have $1000 in the bank with 10% interest per year. Using the formula *($ amount) x (% interest) / 100 *, one year later you will have $100 in interest. 
+With simple interest, to the amount earned from interest is only based on the initial deposit. That means every year you will gain $100. With compound interest, 
+you add the interest back into the acccount and determine next year's interest off of that number. So year two you'll make 10% of $1100 dollars. This slight 
+difference makes a huge difference over time. 
+
+<InterestGraph init={1000} percent={5} num_periods={100} payment={0} />
+
+If you're familiar with your math terms, simple interest (with no additional payments) models as a linear curve and the compound 
+
+<InterestGraph init={1000} percent={5} num_periods={100} payment={100} />
+<InterestGraph init={10000} percent={8} num_periods={40} payment={5000} />

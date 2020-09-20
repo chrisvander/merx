@@ -37,6 +37,7 @@ get return on investment
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+import pandas as pd
 import quandl
 
 app = Flask(__name__)
@@ -60,17 +61,27 @@ def get_bonds():
   
   return df.to_json()
 
-<<<<<<< HEAD
 @app.route('/returns/', methods=['GET'])
 def get_return():
   input = request.args
-  prices = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input[
-  returns = prices / prices.rolling(1) - 1'start'])['Close'][0])
-  end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
+  prices = str(quandl.get("EOD/" + input['stock'], start_date=input['start'], end_date=input['start'])['Close'][0])
+  # end_price = str(quandl.get("EOD/" + input['stock'], start_date=input['end'], end_date=input['end'])['Close'][0])
   return 
 
-=======
->>>>>>> f26e6a238e0647d8382bad501582ea0c1beaba1e
+# Load the file once when the server gets started
+wti_prices = pd.read_csv("data_service/wti_prices.csv")
+
+@app.route('/wti_prices/', methods=['GET'])
+def get_wti_prices():
+  return wti_prices.to_json()
+
+# Load the file once when the server gets started
+etf_prices = pd.read_csv("data_service/etf_prices.csv"))
+
+@app.route('/etf_prices/', methods=['GET'])
+def get_etf_prices():
+  return etf_prices.to_json()
+
 def request_stock(input):
   if 'stock' in input:
     stock = input['stock']

@@ -4,7 +4,7 @@ import { Form, Button, Modal, Container, Card } from 'react-bootstrap';
 import { Accounts } from 'meteor/accounts-base';
 import { Redirect } from 'react-router-dom';
 
-const reasons = [
+export const reasons = [
     [
         1,
         "Literacy", 
@@ -31,7 +31,8 @@ const reasons = [
     ]
 ]
 
-const CardDisplay = ({ title, body, reason, selected, setSelected }) => {
+export const CardDisplay = ({ title, body, reason, selected, setSelected }) => {
+    
     return (
         <Card 
             className={`mt-4 selectable-card ${selected && 'border-green'}`}
@@ -68,17 +69,20 @@ class GetStarted extends React.Component {
 
         console.log("FORM SUBMITTED", email, password);
 
-        Meteor.call("createUser", { email, password, reason: this.state.key }, (err, userId) => {
+        Meteor.call("createCustomUser", email, password, this.state.selected, (err, user) => {
             if (err) {
-                console.log(err);
+                console.error(err);
             } else {
-                this.setState({ redirect: true });
+                Meteor.loginWithPassword(email, password, err => {
+                    if (err) console.error(err)
+                    else this.setState({ redirect: true });
+                });
             }
         });
     }
 
     render() {
-        if (this.state.redirect) <Redirect to="/dashboard" />
+        if (this.state.redirect) return <Redirect to="/dashboard" />
         return (
             <React.Fragment>
                 <Container style={{ display: 'flex', height: '80vh', alignItems: 'center'}}>

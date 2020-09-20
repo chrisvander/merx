@@ -17,10 +17,10 @@ export const StockGraph  = (props) => {
     const typeahead = useRef(null);
 
     const addTicker = tickersSelected => {
-        setLoading(true);
         typeahead.current.clear()
         tickersSelected.forEach(ticker => {
             if (tickerWhitelist.includes(ticker)) {
+                setLoading(true);
                 fetch("http://localhost:5000/stock-history?stock=" + ticker)
                     .then(res => res.json())
                     .then(res => {

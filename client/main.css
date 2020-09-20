@@ -18,7 +18,7 @@ body {
 
 .border-green {
   border-color: green !important;
-  background-color: rgba(160,255,160,0.2)
+  background-color: rgba(160,255,160,0.2) !important;
 }
 
 .js-plotly-plot {
